@@ -1,0 +1,48 @@
+{
+  "recommendId": 61,
+  "productTitle": "节奏",
+  "productDetails": "哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦好吧好吧嗯嗯。哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦好吧好吧嗯嗯哦豁出去的吗的话题终结者创世纪<img src=\"https://f1.xb969.com/b5878430f9c1408aba7565459cfb1283.jpg\" alt=\"100%\" width=\"100%\">",
+  "htmlProductDetails": "   <html>   <head>   <meta charset=\"utf-8\">\n   <meta name=\"viewport\" content=\"width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no\">   <style type=\"text/css\"> p{line-height:200% !important;margin:15px 0px !important;font-size:15px !important;text-align:justify;text-align-last:left;} \nimg{width:100% !important;display:inline-block !important;} </style>   </head>   <body style='margin:0px;padding:0px'><p>哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦好吧好吧嗯嗯。哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦好吧好吧嗯嗯哦豁出去的吗的话题终结者创世纪<img src=\"https://f1.xb969.com/b5878430f9c1408aba7565459cfb1283.jpg?imageMogr2/auto-orient/format/jpg\" alt=\"100%\" width=\"100%\"></p></body></html>",
+  "productLogo": "https://f1.xb969.com/fd33e98832604bd981267f884d5989bd.jpg",
+  "companyName": "空",
+  "companyArea": "上海市-上海市-黄浦区",
+  "companyAddress": "开具",
+  "createUserId": 103685,
+  "createUserDispname": "程砚秋小号",
+  "createUserLogo": "https://f1.xb969.com/8722e9f92b8a476eb1f33172ffc4b1ce.jpg",
+  "createUserProfile": "本来可以靠脸吃饭还是觉要靠才华",
+  "fmtCreateDate": "2021-07-19 11:30",
+  "visibleType": true,
+  "likeStatus": false,
+  "state": true,
+  "commentCount": 2,
+  "likeCount": 2,
+  "likeList": [
+    { "userId": 103694, "displayName": "花粉", "userLogo": "" },
+    { "userId": 104308, "displayName": "花花卡🌸", "userLogo": "" }
+  ],
+  "commentList": [
+    {
+      "commentId": 140,
+      "content": "哈哈哈几节课ii后悔",
+      "fmtContentDate": "07-20 09:41",
+      "contentDate": "2021-07-20T01:41:35.000+0000",
+      "userId": 103694,
+      "displayName": "花粉",
+      "userLogo": "",
+      "commentLikeCount": 1,
+      "likeStatus": false
+    },
+    {
+      "commentId": 129,
+      "content": "巴拉拉",
+      "fmtContentDate": "07-19 13:50",
+      "contentDate": "2021-07-19T05:50:09.000+0000",
+      "userId": 104308,
+      "displayName": "花花卡🌸",
+      "userLogo": "",
+      "commentLikeCount": 2,
+      "likeStatus": false
+    }
+  ]
+}
