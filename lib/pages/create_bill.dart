@@ -99,7 +99,8 @@ class _CreateBillPageState extends State<CreateBillPage> {
 
           case ConnectionState.waiting:
             // TODO: Handle this case.
-            break;
+            return Text("等待中数据");
+          // break;
           case ConnectionState.active:
             // TODO: Handle this case.
             return MainPage();
