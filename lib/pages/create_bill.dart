@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_module/common/colors.dart';
 import 'package:flutter_module/components/BlackNavStyle.dart';
 import 'package:flutter_module/components/InputButtomWidget.dart';
+import 'package:flutter_module/components/PhotoImg.dart';
 import 'package:flutter_module/components/TextStyle.dart';
 import 'package:flutter_module/components/bottom_btn.dart';
 import 'package:flutter_module/components/item_white.dart';
@@ -50,35 +51,34 @@ class CreateBillPage extends StatefulWidget {
 
 class _CreateBillPageState extends State<CreateBillPage> {
   ///声明一个用来存回调的对象
-  VoidCallback? removeListener;
-  final controller = StreamController();
+  // VoidCallback? removeListener;
+  // final controller = StreamController();
   @override
   void dispose() {
-    ///记得解除注册
-    removeListener?.call();
-    controller.close();
+    context.read<GoodsViewModel>().dispose();
     super.dispose();
   }
 
   @override
   void initState() {
     // context.read<GoodsViewModel>().apiDemo(widget.data);
-    context.read<GoodsViewModel>().apiDemoWithFlutter(widget.data);
+    context.read<GoodsViewModel>().configChannel();
+    context.read<GoodsViewModel>().apiDemoWithFlutter(widget.data ?? "");
 
     super.initState();
 
-    ///添加事件响应者,监听native发往flutter端的事件
-    removeListener =
-        BoostChannel.instance.addEventListener("event", (key, arguments) {
-      ///deal with your event here
-      print("key$key");
-      print("flutter arguments$arguments");
-      // context.read()
-      // context.read<GoodsViewModel>().apiDemoResWithFlutter(arguments);
-      context.read<GoodsViewModel>().apiDemo(arguments["resdata"]);
-      controller.sink.add('1');
-      return;
-    });
+    // ///添加事件响应者,监听native发往flutter端的事件
+    // removeListener =
+    //     BoostChannel.instance.addEventListener("event", (key, arguments) {
+    //   ///deal with your event here
+    //   print("key$key");
+    //   print("flutter arguments$arguments");
+    //   // context.read()
+    //   // context.read<GoodsViewModel>().apiDemoResWithFlutter(arguments);
+    //   context.read<GoodsViewModel>().apiDemo(arguments["resData"]);
+    //   controller.sink.add('1');
+    //   return;
+    // });
   }
 
   @override
@@ -89,7 +89,7 @@ class _CreateBillPageState extends State<CreateBillPage> {
     // })
     // return MainPage();
     return StreamBuilder(
-      stream: controller.stream,
+      stream: context.read<GoodsViewModel>().controller.stream,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         // switch (snapshot.connectionState)
         // ca
@@ -99,7 +99,10 @@ class _CreateBillPageState extends State<CreateBillPage> {
 
           case ConnectionState.waiting:
             // TODO: Handle this case.
-            return Text("等待中数据");
+            // return Center(
+            //   child: Text("等待中数据"),
+            // );
+            return CupertinoActivityIndicator();
           // break;
           case ConnectionState.active:
             // TODO: Handle this case.
@@ -147,6 +150,7 @@ class MainPage extends StatelessWidget {
                       Navigator.push(context, PopRoute(child: InputButtomWidget(
                         onEditingCompleteText: (text) {
                           print('点击发送 ---$text');
+                          context.read<GoodsViewModel>().apiCommentAction(text);
                         },
                       )));
                     },
@@ -335,34 +339,6 @@ class GoodsInfos extends StatelessWidget {
                 ),
               ),
               LikeListWidget(goodsDetail: goodsDetail)
-              // GridView(
-              //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //         crossAxisCount: 1, //横轴三个子widget
-              //         childAspectRatio: 1.0 //宽高比为1时，子widget
-              //         ),
-              //     children: <Widget>[
-              //       CircleAvatar(
-              //         radius: 15,
-              //       ),
-              //       // Icon(Icons.airport_shuttle),
-              //       // Icon(Icons.all_inclusive),
-              //       // Icon(Icons.beach_access),
-              //       // Icon(Icons.cake),
-              //       // Icon(Icons.free_breakfast)
-              //     ]),
-
-              // Expanded(
-              //   child:
-              // ListView.builder(
-              //     scrollDirection: Axis.horizontal,
-              //     itemCount: 2,
-              //     itemBuilder: (BuildContext context, int index) {
-              //       return CircleAvatar(
-              //         radius: 15,
-              //       );
-              //     },
-              //   ),
-              // )
             ],
           ),
         ),
@@ -375,14 +351,6 @@ class GoodsInfos extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        // ListView.builder(
-        //   itemCount: 10,
-        //   // itemExtent: 50.0, //强制高度为50.0
-        //   itemBuilder:
-        //       (BuildContext context, int index) {
-        //     return CommentItem();
-        //   },
-        // ),
       ],
     );
   }
@@ -408,24 +376,22 @@ class _LikeListWidgetState extends State<LikeListWidget> {
       return Container();
     }
     if (likeList.length == 1) {
-      return CircleAvatar(
+      return PhotoImg(
         radius: 15,
-        backgroundImage: NetworkImage(likeList[0].userLogo),
+        logo: likeList[0].userLogo,
       );
     }
     if (likeList.length == 2) {
       return Wrap(
         spacing: -8.0,
         children: [
-          CircleAvatar(
+          PhotoImg(
             radius: 15,
-            backgroundImage: NetworkImage(likeList[0].userLogo),
-            foregroundImage: NetworkImage(
-                "https://f1.xb969.com/8722e9f92b8a476eb1f33172ffc4b1ce.jpg"),
+            logo: likeList[0].userLogo,
           ),
-          CircleAvatar(
+          PhotoImg(
             radius: 15,
-            backgroundImage: NetworkImage(likeList[1].userLogo),
+            logo: likeList[1].userLogo,
           ),
         ],
       );
@@ -433,17 +399,17 @@ class _LikeListWidgetState extends State<LikeListWidget> {
     return Wrap(
       spacing: -8.0,
       children: [
-        CircleAvatar(
+        PhotoImg(
           radius: 15,
-          backgroundImage: NetworkImage(likeList[0].userLogo),
+          logo: likeList[0].userLogo,
         ),
-        CircleAvatar(
+        PhotoImg(
           radius: 15,
-          backgroundImage: NetworkImage(likeList[1].userLogo),
+          logo: likeList[1].userLogo,
         ),
-        CircleAvatar(
+        PhotoImg(
           radius: 15,
-          backgroundImage: NetworkImage(likeList[2].userLogo),
+          logo: likeList[2].userLogo,
         ),
       ],
     );

@@ -1,14 +1,14 @@
-// @dart=2.9
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PhotoImg extends StatefulWidget {
   PhotoImg(
-      {Key key,
-      this.logo =
-          'https://f1.xb969.com/FnjvZEd3_9-WzqL-YCk7tnywyHSe?imageMogr2/auto-orient'})
+      {Key? key,
+      this.logo = 'https://f1.xb969.com/FkGevpIMkoZJ_tSA62El_kO61tcB',
+      this.radius})
       : super(key: key);
-  final String logo;
+  final String? logo;
+  final double? radius;
   @override
   _PhotoImgState createState() => _PhotoImgState();
 }
@@ -16,8 +16,13 @@ class PhotoImg extends StatefulWidget {
 class _PhotoImgState extends State<PhotoImg> {
   @override
   Widget build(BuildContext context) {
+    String _logo = widget.logo ?? "";
     return CircleAvatar(
-      backgroundImage: NetworkImage(widget.logo),
+      radius: widget.radius,
+      backgroundColor: Colors.white,
+      backgroundImage: NetworkImage(_logo == ""
+          ? 'https://f1.xb969.com/FkGevpIMkoZJ_tSA62El_kO61tcB'
+          : _logo),
     );
   }
 }
