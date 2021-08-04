@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_module/common/colors.dart';
-import 'package:flutter_module/components/item_white.dart';
+import 'package:flutter_module/components/ItemWhite.dart';
 import 'package:provider/provider.dart';
 
 import 'UploadView.dart';

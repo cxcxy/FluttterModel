@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_module/common/colors.dart';
 import 'package:flutter_module/components/BlackNavStyle.dart';
 import 'package:flutter_module/components/PhotoImg.dart';
-import 'package:flutter_module/components/item_white.dart';
+import 'package:flutter_module/components/ItemWhite.dart';
 import 'package:flutter_module/utils/utils.dart';
 import 'package:flutter_module/vc/MyImage.dart';
 import 'package:flutter_module/vc/UploadView.dart';

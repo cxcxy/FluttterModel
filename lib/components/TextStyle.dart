@@ -54,6 +54,31 @@ class _Text333State extends State<Text333> {
   }
 }
 
+class Text666 extends StatefulWidget {
+  final String? str;
+  final double? fontSize;
+  final FontWeight? fontWeight;
+  Text666({Key? key, this.str = "", this.fontSize, this.fontWeight})
+      : super(key: key);
+
+  @override
+  _Text666State createState() => _Text666State();
+}
+
+class _Text666State extends State<Text666> {
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      widget.str!,
+      style: TextStyle(
+        color: HexColor("#666666"),
+        fontSize: widget.fontSize,
+        fontWeight: widget.fontWeight,
+      ),
+    );
+  }
+}
+
 // 文本颜色 - #999999
 class Text999 extends StatefulWidget {
   final String? str;

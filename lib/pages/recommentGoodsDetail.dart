@@ -3,13 +3,14 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_html/style.dart';
 import 'package:flutter_module/common/colors.dart';
 import 'package:flutter_module/components/BlackNavStyle.dart';
 import 'package:flutter_module/components/InputButtomWidget.dart';
 import 'package:flutter_module/components/PhotoImg.dart';
 import 'package:flutter_module/components/TextStyle.dart';
-import 'package:flutter_module/components/bottom_btn.dart';
-import 'package:flutter_module/components/item_white.dart';
+import 'package:flutter_module/components/BottomBtn.dart';
+import 'package:flutter_module/components/ItemWhite.dart';
 import 'package:flutter_module/pages/goodsModel.dart';
 import 'package:flutter_module/utils/utils.dart';
 import 'package:flutter_module/vc/UploadView.dart';
@@ -236,13 +237,14 @@ class _MainContentState extends State<MainContent> {
             Expanded(
               child: Container(
                 width: double.infinity,
-                padding: EdgeInsets.fromLTRB(38, 0, 38, 100),
+                padding: EdgeInsets.fromLTRB(38, 0, 38, 0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4),
                   color: Colors.white,
                 ),
                 child: ListView.builder(
                   shrinkWrap: true,
+                  padding: EdgeInsets.only(bottom: 100),
                   itemCount: 2 + goodsDetail.commentList.length,
                   // itemExtent: 50.0, //强制高度为50.0
                   itemBuilder: (BuildContext context, int index) {
@@ -443,33 +445,67 @@ class _CommentItemState extends State<CommentItem> {
             radius: 18,
             backgroundImage: NetworkImage(widget.commentItem?.userLogo ?? ""),
           ),
+          // Icon(Icons.favorite_border, size: 14),
           Expanded(
-            child: Container(
-              margin: EdgeInsets.only(left: 10),
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
-              // color: Colors.red,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text333(
-                    str: "${widget.commentItem?.displayName ?? ""}",
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
+            child: Stack(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 10),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text333(
+                        str: "${widget.commentItem?.displayName ?? ""}",
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                        child: Text999(
+                          str: '${widget.commentItem?.fmtContentDate ?? ""}',
+                          fontSize: 13,
+                        ),
+                      ),
+                      Text333(
+                        str: '${widget.commentItem?.content ?? ""}',
+                        fontSize: 13,
+                      ),
+                      Divider()
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                    child: Text999(
-                      str: '${widget.commentItem?.fmtContentDate ?? ""}',
-                      fontSize: 13,
-                    ),
-                  ),
-                  Text333(
-                    str: '${widget.commentItem?.content ?? ""}',
-                    fontSize: 13,
-                  ),
-                  Divider()
-                ],
-              ),
+                ),
+                Positioned(
+                    top: 10,
+                    right: 10,
+                    child: GestureDetector(
+                      onTap: () {
+                        if ((widget.commentItem?.likeStatus ?? false) ==
+                            false) {
+                          context
+                              .read<GoodsViewModel>()
+                              .requestLikeCommentStatus(
+                                  widget.commentItem?.commentId ?? 0);
+                        }
+                      },
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(right: 5),
+                            child: (widget.commentItem?.likeStatus ?? false)
+                                ? Icon(Icons.thumb_up_alt_rounded,
+                                    size: 14, color: HexColor("#E3A43B"))
+                                : Icon(Icons.thumb_up_alt_outlined, size: 14),
+                          ),
+                          Text666(
+                            str:
+                                widget.commentItem?.commentLikeCount.toString(),
+                            fontSize: 12,
+                          )
+                        ],
+                      ),
+                    ))
+              ],
             ),
           ),
         ],
@@ -538,28 +574,38 @@ class _UserInfoWidgtState extends State<UserInfoWidgt> {
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(right: 38),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: HexColor("#786448"),
-            ),
-            width: 80,
-            height: 25,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.favorite_border,
-                  size: 12,
-                  color: Colors.white,
-                ),
-                Text(
-                  '喜欢',
-                  style: TextStyle(color: Colors.white, fontSize: 13),
-                ),
-              ],
+          GestureDetector(
+            onTap: () {
+              print("onPointerDownEvent");
+              context.read<GoodsViewModel>().requestLikeGoodsStatus();
+            },
+            child: Container(
+              margin: EdgeInsets.only(right: 38),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: HexColor("#786448"),
+              ),
+              width: 80,
+              height: 25,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    goodsDetail.likeStatus
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                    size: 12,
+                    color: goodsDetail.likeStatus
+                        ? HexColor("#E3A43B")
+                        : Colors.white,
+                  ),
+                  Text(
+                    '喜欢',
+                    style: TextStyle(color: Colors.white, fontSize: 13),
+                  ),
+                ],
+              ),
             ),
           )
         ],
@@ -647,6 +693,26 @@ class _HtmlContentState extends State<HtmlContent> {
       //   <!--You can pretty much put any html in here!-->
       // </div>""",
       data: goodsDetail.productDetails,
+      style: {
+        "*": Style(
+          // border: Border(bottom: BorderSide(color: Colors.grey)),
+          padding: const EdgeInsets.all(0),
+          lineHeight: LineHeight.number(1.5),
+          margin: EdgeInsets.fromLTRB(0, 15, 0, 15),
+          fontSize: FontSize(15),
+        ),
+        "img": Style(
+          width: double.infinity,
+          display: Display.INLINE_BLOCK,
+        ),
+        "p": Style(
+          // border: Border(bottom: BorderSide(color: Colors.grey)),
+          padding: const EdgeInsets.all(0),
+          lineHeight: LineHeight.number(1.5),
+          margin: EdgeInsets.fromLTRB(0, 15, 0, 15),
+          fontSize: FontSize(15),
+        ),
+      },
     );
   }
 }

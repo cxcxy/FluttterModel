@@ -9,7 +9,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_module/apis/Api.dart';
 import 'package:flutter_module/apis/Request.dart';
+import 'package:flutter_module/utils/Toast.dart';
 import 'goodsModel.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class GoodsViewModel with ChangeNotifier {
   Welcome goodsDetail = Welcome();
@@ -34,7 +36,15 @@ class GoodsViewModel with ChangeNotifier {
     this.removeListener1 =
         BoostChannel.instance.addEventListener("event", (key, arguments) {
       String _url = arguments["url"];
-      if (_url == Api.recommendprodCreatecomment) {
+      int _code = arguments["code"];
+      String? _msg = arguments["message"];
+      if (_code == 2000) {
+        XBToast.instance.showText(_msg ?? "请求错误");
+        return;
+      }
+      if (_url == Api.recommendprodCreatecomment ||
+          _url == Api.recommendprodLikeproduct ||
+          _url == Api.recommendprodLikecomment) {
         requestRecommendGoodsDetail(this.recommendId ?? "");
       } else {
         getRecommendGoodsDetailData(arguments["resData"]);
@@ -60,14 +70,28 @@ class GoodsViewModel with ChangeNotifier {
 
   /// 请求 推荐商品详情
   requestRecommendGoodsDetail(String recommendId) async {
-    Request().requestBaseTarget(Api.recommendprodProductDetail, {
+    this.recommendId = recommendId;
+    Request.instance.requestBaseTarget(Api.recommendprodProductDetail, {
       'recommendId': recommendId,
     });
   }
 
   /// 提交评论
   requestCommitComment(String content) async {
-    Request().requestBaseTarget(Api.recommendprodCreatecomment,
+    Request.instance.requestBaseTarget(Api.recommendprodCreatecomment,
         {'recommendId': this.recommendId, 'content': content});
+  }
+
+  /// 请求喜欢接口
+  requestLikeGoodsStatus() async {
+    int operType = this.goodsDetail.likeStatus ? 2 : 1;
+    Request.instance.requestBaseTarget(Api.recommendprodLikeproduct,
+        {'recommendId': this.recommendId, 'operType': operType});
+  }
+
+  /// 请求点赞评论接口
+  requestLikeCommentStatus(int commentId) async {
+    Request.instance.requestBaseTarget(
+        Api.recommendprodLikecomment, {'commentId': commentId});
   }
 }

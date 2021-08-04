@@ -6,7 +6,7 @@ import 'package:flutter_boost/flutter_boost.dart';
 // import 'pages/lifecycle_test_page.dart';
 // import 'package:flutter_boost/page_visibility.dart';
 import 'package:flutter_boost/flutter_boost_app.dart';
-import 'package:flutter_module/pages/create_bill.dart';
+import 'package:flutter_module/pages/recommentGoodsDetail.dart';
 // import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_module/vc/flutterPage.dart';
 import 'package:flutter_module/vc/myDefalutApp.dart';
