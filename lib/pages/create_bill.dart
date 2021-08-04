@@ -63,7 +63,9 @@ class _CreateBillPageState extends State<CreateBillPage> {
   void initState() {
     // context.read<GoodsViewModel>().apiDemo(widget.data);
     context.read<GoodsViewModel>().configChannel();
-    context.read<GoodsViewModel>().apiDemoWithFlutter(widget.data ?? "");
+    context
+        .read<GoodsViewModel>()
+        .requestRecommendGoodsDetail(widget.data ?? "");
 
     super.initState();
 
@@ -150,7 +152,9 @@ class MainPage extends StatelessWidget {
                       Navigator.push(context, PopRoute(child: InputButtomWidget(
                         onEditingCompleteText: (text) {
                           print('点击发送 ---$text');
-                          context.read<GoodsViewModel>().apiCommentAction(text);
+                          context
+                              .read<GoodsViewModel>()
+                              .requestCommitComment(text);
                         },
                       )));
                     },
