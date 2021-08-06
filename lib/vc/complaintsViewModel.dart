@@ -31,32 +31,30 @@ class ComplaintsViewModel with ChangeNotifier {
 //接收消息监听
   receiveMessage() {
     print("接收消息监听11");
-    messageChannel.setMessageHandler((result) async {
-      print("Flutter 已收到消息11111");
-      print(result);
-      var _method = result["method"];
-      switch (_method) {
-        case "img":
-          this.clickAddImg(img: result["img"]);
-          break;
-        case "getComplaintedUserId":
-          complaintedUserId = result["complaintedUserId"];
-          break;
-        default:
-      }
-      // print(result.img);
-      // if (result["img"]) {
-      // complaintedUserId = result["complaintedUserId"];
-
-      // return
-      // }
-
-      // if (result["complaintedUserId"]) {
-      //   complaintedUserId = result["complaintedUserId"];
-      // }
-
-      // return 'Flutter 已收到消息';
+    messageChannel.setMessageHandler((message) async {
+      // setState(() {
+      //   _nativeData = (message as Map)['count'];
+      // });
+      return message;
     });
+
+    // messageChannel.setMessageHandler((message) => (
+
+    // ));
+    //  ((result) async {
+    // print("Flutter 已收到消息11111");
+    // print(result);
+    // var _method = result["method"];
+    // switch (_method) {
+    //   case "img":
+    //     this.clickAddImg(img: result["img"]);
+    //     break;
+    //   case "getComplaintedUserId":
+    //     complaintedUserId = result["complaintedUserId"];
+    //     break;
+    //   default:
+    // }
+    // });
   }
 
   setId(userId) {

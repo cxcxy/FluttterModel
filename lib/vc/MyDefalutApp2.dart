@@ -20,17 +20,17 @@ class _BasicMessageChannelDemoState extends State<BasicMessageChannelDemo> {
   static const platform = const MethodChannel('BasicMessageChannel');
 
   //发送消息
-  Future<Map> sendMessage(Map arguments) async {
-    Map reply = await messageChannel.send(arguments);
+  Future<SendObj> sendMessage(SendObj arguments) async {
+    SendObj? reply = (await messageChannel.send(arguments)) as SendObj?;
     //解析 原生发给 Flutter 的参数
-    int code = reply["code"];
-    String message = reply["message"];
+    int _code = reply?.code ?? 0;
+    String message = reply?.ontent ?? "";
 
     //更新 Flutter 中页面显示
     // setState(() {
     //   recive = "code:$code message:$message";
     // });
-    return reply;
+    return reply!;
   }
 
   var _data;
@@ -65,8 +65,8 @@ class _BasicMessageChannelDemoState extends State<BasicMessageChannelDemo> {
               //   _data = '$name,$age';
               // });
               //用来实现 Android iOS 主动触发 向 Flutter 中发送消息
-              await sendMessage(
-                  {"method": "test2", "ontent": "flutter 中的数据", "code": 100});
+              // await sendMessage(
+              //     {"method": "test2", "ontent": "flutter 中的数据", "code": 100});
             },
           ),
           Text('原生返回数据：$_data'),
@@ -74,4 +74,28 @@ class _BasicMessageChannelDemoState extends State<BasicMessageChannelDemo> {
       ),
     );
   }
+}
+
+class SendObj {
+  SendObj({
+    this.code,
+    this.method,
+    this.ontent,
+  });
+
+  int? code;
+  String? method;
+  String? ontent;
+
+  factory SendObj.fromJson(Map<String, dynamic> json) => SendObj(
+        code: json["code"],
+        method: json["method"],
+        ontent: json["ontent"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "code": code,
+        "method": method,
+        "ontent": ontent,
+      };
 }
