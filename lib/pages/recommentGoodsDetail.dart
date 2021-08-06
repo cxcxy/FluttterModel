@@ -440,10 +440,14 @@ class _CommentItemState extends State<CommentItem> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            backgroundColor: Colors.amberAccent,
+          // CircleAvatar(
+          //   backgroundColor: Colors.amberAccent,
+          //   radius: 18,
+          //   backgroundImage: NetworkImage(widget.commentItem?.userLogo ?? ""),
+          // ),
+          PhotoImg(
+            logo: widget.commentItem?.userLogo ?? "",
             radius: 18,
-            backgroundImage: NetworkImage(widget.commentItem?.userLogo ?? ""),
           ),
           // Icon(Icons.favorite_border, size: 14),
           Expanded(
@@ -533,16 +537,9 @@ class _UserInfoWidgtState extends State<UserInfoWidgt> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
-            backgroundColor: Colors.amberAccent,
+          PhotoImg(
+            logo: goodsDetail.createUserLogo,
             radius: 30,
-            backgroundImage: NetworkImage(goodsDetail.createUserLogo),
-            // child: CachedNetworkImage(
-            //   imageUrl: goodsDetail.createUserLogo,
-            //   fit: BoxFit.cover,
-            //   cacheKey: goodsDetail.createUserLogo,
-            //   // key: widget.key,
-            // ),
           ),
           Expanded(
             child: Container(

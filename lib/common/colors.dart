@@ -1,8 +1,14 @@
 import 'dart:ui';
 
+// listview 背景色
 final tableColor = Color.fromRGBO(242, 242, 242, 1);
+
+/// 导航条背景色
 final navBlackColor = Color.fromRGBO(32, 32, 39, 1);
+
+/// 输入框 默认颜色
 final placeHolderColor = Color.fromRGBO(153, 153, 153, 1);
+
 final goldenColor = Color.fromRGBO(253, 225, 182, 1);
 
 /// 标题颜色

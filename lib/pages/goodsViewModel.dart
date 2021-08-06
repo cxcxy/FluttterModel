@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +13,8 @@ import 'package:flutter_module/apis/Request.dart';
 import 'package:flutter_module/utils/Toast.dart';
 import 'goodsModel.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+export 'package:common_utils/common_utils.dart';
+export 'package:flustars/flustars.dart';
 
 class GoodsViewModel with ChangeNotifier {
   Welcome goodsDetail = Welcome();
@@ -78,6 +81,7 @@ class GoodsViewModel with ChangeNotifier {
 
   /// 提交评论
   requestCommitComment(String content) async {
+    // ScreenUtil.getStatusBarH(context)
     Request.instance.requestBaseTarget(Api.recommendprodCreatecomment,
         {'recommendId': this.recommendId, 'content': content});
   }
